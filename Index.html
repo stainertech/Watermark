@@ -2,548 +2,675 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090f">
-  <title>VanishFX | Video Watermark Tool</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090811">
+<title>VanishFX | TikTok Watermark Remover</title>
 
-    :root {
-      --bg: #09090f;
-      --panel: #12121c;
-      --purple: #8b5cf6;
-      --pink: #c084fc;
-      --text: #f5f3ff;
-      --muted: #a1a1b5;
-      --border: #29243b;
-    }
+<style>
+:root {
+  --bg: #090811;
+  --panel: #11101d;
+  --purple: #963cff;
+  --pink: #c65cff;
+  --text: #f8f6ff;
+  --muted: #aaa6c4;
+  --border: #382451;
+}
 
-    body {
-      background:
-        radial-gradient(ellipse at 50% 0%, #241344 0%, transparent 45%),
-        var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    nav {
-      max-width: 1050px;
-      margin: auto;
-      padding: 22px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ffffff0d;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 0%, #24113c 0%, transparent 42%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
 
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
+button, input {
+  font: inherit;
+}
 
-    .logo span {
-      color: var(--pink);
-    }
+button {
+  cursor: pointer;
+}
 
-    .status {
-      color: #c4b5fd;
-      font-size: 12px;
-      border: 1px solid #6d28d9;
-      padding: 5px 10px;
-      border-radius: 30px;
-    }
+header {
+  border-bottom: 1px solid #ffffff12;
+  background: #0b0a13eF;
+}
 
-    main {
-      max-width: 760px;
-      margin: auto;
-      padding: 65px 20px 35px;
-    }
+.nav {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
 
-    .hero {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+.brand {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
 
-    .tag {
-      color: #c4b5fd;
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+.brand span {
+  color: var(--pink);
+}
 
-    h1 {
-      font-size: clamp(34px, 8vw, 55px);
-      line-height: 1.12;
-      letter-spacing: -2px;
-      margin: 17px 0;
-    }
+.nav-right {
+  color: var(--muted);
+  font-size: 12px;
+}
 
-    h1 span {
-      background: linear-gradient(90deg, #a78bfa, #e879f9);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 65px 20px 30px;
+}
 
-    .hero p {
-      max-width: 520px;
-      margin: auto;
-      color: var(--muted);
-      font-size: 15px;
-    }
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-    .card {
-      background: #12121ceF;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 25px;
-      box-shadow: 0 20px 70px #0005;
-    }
+.eyebrow {
+  color: #c28aff;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 25px;
-    }
+h1 {
+  font-size: clamp(35px, 7vw, 57px);
+  line-height: 1.13;
+  letter-spacing: -2px;
+  margin: 15px 0;
+}
 
-    .tab {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 8px;
-      color: var(--muted);
-      background: #0c0c14;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.gradient {
+  background: linear-gradient(90deg, #a855f7, #e879f9);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
 
-    .tab.active {
-      background: #291a47;
-      border-color: var(--purple);
-      color: white;
-    }
+.hero p {
+  color: var(--muted);
+  max-width: 570px;
+  margin: auto;
+  font-size: 15px;
+}
 
-    .field-label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 14px;
-      font-weight: bold;
-    }
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
 
-    .url-row {
-      display: flex;
-      gap: 10px;
-    }
+.choice {
+  background: linear-gradient(145deg, #151023, #0e0d18);
+  border: 1px solid #7132b2;
+  border-radius: 20px;
+  padding: 30px 24px;
+  text-align: center;
+  transition: .2s;
+}
 
-    input[type="url"] {
-      width: 100%;
-      min-width: 0;
-      padding: 15px;
-      border: 1px solid #343044;
-      background: #09090f;
-      border-radius: 12px;
-      color: white;
-      font-size: 14px;
-      outline: none;
-    }
+.choice:hover {
+  border-color: #c084fc;
+  transform: translateY(-3px);
+}
 
-    input:focus {
-      border-color: var(--purple);
-    }
+.icon-circle {
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  color: #e3a4ff;
+  background: #7024bc35;
+  border: 1px solid #7636b8;
+}
 
-    button {
-      font: inherit;
-    }
+.choice h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
 
-    .primary {
-      border: none;
-      border-radius: 12px;
-      padding: 14px 19px;
-      color: white;
-      background: linear-gradient(110deg, #7c3aed, #a855f7);
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform .2s, opacity .2s;
-    }
+.choice p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 23px;
+}
 
-    .primary:active {
-      transform: scale(.98);
-    }
+.primary {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  background: linear-gradient(100deg, #8b35ed, #ad43f4);
+}
 
-    .primary:hover {
-      opacity: .9;
-    }
+.primary:hover {
+  filter: brightness(1.12);
+}
 
-    .url-row .primary {
-      white-space: nowrap;
-    }
+.secondary {
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #191327;
+  color: white;
+}
 
-    .hint {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 12px;
-    }
+.workspace {
+  display: none;
+  margin-top: 25px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: 18px;
+}
 
-    .dropzone {
-      border: 1px dashed #6d4aa5;
-      background: #171122;
-      border-radius: 16px;
-      text-align: center;
-      padding: 30px 15px;
-    }
+.workspace.show {
+  display: block;
+}
 
-    .upload-icon {
-      font-size: 34px;
-      margin-bottom: 7px;
-    }
+.workspace h2 {
+  font-size: 21px;
+  margin-bottom: 5px;
+}
 
-    .dropzone p {
-      color: var(--muted);
-      font-size: 13px;
-      margin: 5px 0 17px;
-    }
+.workspace > p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
 
-    .file-input {
-      display: none;
-    }
+.field {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 9px;
+}
 
-    .secondary {
-      background: #211733;
-      border: 1px solid #5b3b83;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+input[type="url"] {
+  width: 100%;
+  padding: 14px;
+  color: white;
+  background: #090811;
+  border: 1px solid #49345e;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 13px;
+}
 
-    .preview {
-      display: none;
-      margin-top: 18px;
-    }
+input[type="url"]:focus {
+  border-color: var(--purple);
+}
 
-    video {
-      width: 100%;
-      max-height: 350px;
-      background: #000;
-      border-radius: 12px;
-    }
+.dropzone {
+  padding: 25px 15px;
+  text-align: center;
+  border: 1px dashed #8050a9;
+  border-radius: 13px;
+  background: #171123;
+}
 
-    .file-name {
-      color: #ddd6fe;
-      font-size: 13px;
-      margin-top: 8px;
-      overflow-wrap: anywhere;
-    }
+.dropzone p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 6px 0 15px;
+}
 
-    .notice {
-      display: none;
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #20182e;
-      border: 1px solid #493365;
-      color: #ddd6fe;
-      font-size: 13px;
-      overflow-wrap: anywhere;
-    }
+.file-input {
+  display: none;
+}
 
-    .notice.error {
-      background: #2b151d;
-      border-color: #713044;
-      color: #fecdd3;
-    }
+.preview {
+  display: none;
+  margin-top: 18px;
+}
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 25px;
-    }
+.preview video, .result video {
+  width: 100%;
+  max-height: 400px;
+  background: black;
+  border-radius: 12px;
+}
 
-    .feature {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 10px;
-      text-align: center;
-      background: #101019;
-    }
+.file-name {
+  color: #d6c4f5;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
 
-    .feature strong {
-      display: block;
-      font-size: 13px;
-      margin: 5px 0;
-    }
+.message {
+  display: none;
+  margin-top: 15px;
+  padding: 13px;
+  border-radius: 10px;
+  background: #201733;
+  border: 1px solid #553475;
+  color: #e8d5ff;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
 
-    .feature small {
-      color: var(--muted);
-      font-size: 11px;
-    }
+.message.error {
+  background: #301820;
+  border-color: #7c3447;
+  color: #ffc9d3;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px 15px 35px;
-      color: #77778b;
-      font-size: 12px;
-    }
+.result {
+  display: none;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
 
-    .hidden {
-      display: none !important;
-    }
+.result.show {
+  display: block;
+}
 
-    @media (max-width: 520px) {
-      main {
-        padding-top: 45px;
-      }
+.result h3 {
+  margin-bottom: 12px;
+}
 
-      .card {
-        padding: 17px;
-      }
+.download {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 14px;
+}
 
-      .url-row {
-        flex-direction: column;
-      }
+.how {
+  padding: 60px 0 35px;
+  text-align: center;
+}
 
-      .features {
-        grid-template-columns: 1fr;
-      }
+.how h2 {
+  font-size: 24px;
+  margin-bottom: 25px;
+}
 
-      .feature {
-        text-align: left;
-        padding: 12px 16px;
-      }
-    }
-  </style>
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.step {
+  padding: 15px 8px;
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #a34aff;
+  color: #c084fc;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+footer {
+  text-align: center;
+  border-top: 1px solid #ffffff10;
+  padding: 25px 15px;
+  color: #88839f;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 45px 16px 20px;
+  }
+
+  .choices {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .choice {
+    padding: 24px 19px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .nav-right {
+    display: none;
+  }
+
+  .workspace {
+    padding: 18px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <nav>
-    <div class="logo">Vanish<span>FX</span></div>
-    <div class="status">● VIDEO TOOL</div>
-  </nav>
+<header>
+  <div class="nav">
+    <div class="brand">Vanish<span>FX</span></div>
+    <div class="nav-right">Clean video · Simple · Free to use</div>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="tag">Your videos, your way</div>
-      <h1>Clean videos.<br><span>No distractions.</span></h1>
-      <p>
-        Upload a video or paste a TikTok link.
-        Prepare your video for watermark processing
-        with a simple, modern workspace.
-      </p>
-    </section>
+<main>
+  <section class="hero">
+    <div class="eyebrow">YOUR VIDEO, YOUR WAY</div>
+    <h1>Get Your <span class="gradient">Clean Video</span><br>in Just a Few Clicks</h1>
+    <p>
+      Upload a video or paste a TikTok link.
+      Choose your preferred method and prepare your video
+      for watermark processing.
+    </p>
+  </section>
 
-    <section class="card">
-      <div class="tabs">
-        <button class="tab active" id="linkTab" type="button">
-          🔗 TikTok Link
-        </button>
-        <button class="tab" id="uploadTab" type="button">
-          📁 Upload Video
-        </button>
+  <section class="choices">
+
+    <article class="choice">
+      <div class="icon-circle">↑</div>
+      <h2>Upload Video</h2>
+      <p>Select a video from your phone or computer.</p>
+      <button class="primary" id="openUpload">
+        Choose Video
+      </button>
+    </article>
+
+    <article class="choice">
+      <div class="icon-circle">↗</div>
+      <h2>Paste TikTok Link</h2>
+      <p>Enter the link to a TikTok video you are allowed to edit.</p>
+      <button class="primary" id="openLink">
+        Enter Video Link
+      </button>
+    </article>
+
+  </section>
+
+  <section class="workspace" id="uploadWorkspace">
+    <h2>Upload your video</h2>
+    <p>Select a video to preview and prepare for processing.</p>
+
+    <div class="dropzone">
+      <strong>Choose a video from your device</strong>
+      <p>Video files supported by your browser</p>
+
+      <input
+        type="file"
+        id="videoFile"
+        class="file-input"
+        accept="video/*"
+      >
+
+      <button class="secondary" id="chooseFile">
+        Browse files
+      </button>
+    </div>
+
+    <div class="preview" id="preview">
+      <video id="videoPlayer" controls playsinline></video>
+      <div class="file-name" id="fileName"></div>
+
+      <button class="primary" id="processUpload">
+        Process Video
+      </button>
+    </div>
+
+    <div class="message" id="uploadMessage" role="status"></div>
+  </section>
+
+  <section class="workspace" id="linkWorkspace">
+    <h2>Paste your TikTok link</h2>
+    <p>Enter the URL of the video you want to process.</p>
+
+    <label class="field" for="videoUrl">Video URL</label>
+    <input
+      type="url"
+      id="videoUrl"
+      placeholder="https://www.tiktok.com/..."
+      autocomplete="url"
+    >
+
+    <button class="primary" id="processLink">
+      Process Video
+    </button>
+
+    <div class="message" id="linkMessage" role="status"></div>
+  </section>
+
+  <section class="result" id="result">
+    <h3>Your processed video</h3>
+    <video id="resultVideo" controls playsinline></video>
+    <a id="downloadLink" class="primary download" download="clean-video.mp4">
+      Download Video
+    </a>
+  </section>
+
+  <section class="how">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="number">1</div>
+        <strong>Choose your video</strong>
+        <p>Upload a file or paste a video link.</p>
       </div>
 
-      <div id="linkPanel">
-        <label class="field-label" for="videoUrl">
-          Paste your TikTok video link
-        </label>
-
-        <div class="url-row">
-          <input
-            type="url"
-            id="videoUrl"
-            placeholder="https://www.tiktok.com/..."
-            autocomplete="url"
-          >
-          <button class="primary" id="processLink" type="button">
-            Continue →
-          </button>
-        </div>
-
-        <p class="hint">
-          Use a public video you own or have permission to process.
-        </p>
+      <div class="step">
+        <div class="number">2</div>
+        <strong>Process the video</strong>
+        <p>The connected processing service edits your video.</p>
       </div>
 
-      <div id="uploadPanel" class="hidden">
-        <div class="dropzone">
-          <div class="upload-icon">⬆️</div>
-          <strong>Select a video from your phone</strong>
-          <p>Choose a video file to preview before processing.</p>
-
-          <input
-            class="file-input"
-            type="file"
-            id="videoFile"
-            accept="video/*"
-          >
-
-          <button class="secondary" id="chooseFile" type="button">
-            Choose video
-          </button>
-        </div>
-
-        <div class="preview" id="preview">
-          <video id="videoPlayer" controls playsinline></video>
-          <div class="file-name" id="fileName"></div>
-          <button
-            class="primary"
-            id="processUpload"
-            type="button"
-            style="width:100%; margin-top:14px;"
-          >
-            Continue to processing →
-          </button>
-        </div>
+      <div class="step">
+        <div class="number">3</div>
+        <strong>Download the result</strong>
+        <p>Preview the result and save the processed video.</p>
       </div>
+    </div>
+  </section>
+</main>
 
-      <div class="notice" id="notice" role="status" aria-live="polite"></div>
-    </section>
+<footer>
+  VanishFX · Independent video tool · Not affiliated with TikTok.
+  <br>Only process videos you own or have permission to edit.
+</footer>
 
-    <section class="features">
-      <div class="feature">
-        <span>🔗</span>
-        <strong>Link support</strong>
-        <small>Start with a TikTok URL</small>
-      </div>
+<script>
+const uploadWorkspace = document.getElementById("uploadWorkspace");
+const linkWorkspace = document.getElementById("linkWorkspace");
+const videoFile = document.getElementById("videoFile");
+const preview = document.getElementById("preview");
+const videoPlayer = document.getElementById("videoPlayer");
+const fileName = document.getElementById("fileName");
+const uploadMessage = document.getElementById("uploadMessage");
+const linkMessage = document.getElementById("linkMessage");
+const result = document.getElementById("result");
 
-      <div class="feature">
-        <span>📱</span>
-        <strong>Mobile friendly</strong>
-        <small>Designed for your phone</small>
-      </div>
+let selectedVideo = null;
+let previewUrl = null;
 
-      <div class="feature">
-        <span>✨</span>
-        <strong>Simple workflow</strong>
-        <small>Preview before processing</small>
-      </div>
-    </section>
-  </main>
+// Add your real backend endpoint here when it is ready.
+// GitHub Pages alone cannot process videos on a server.
+const API_URL = "";
 
-  <footer>
-    VanishFX is an independent project and is not affiliated with TikTok.
-    <br>Only process videos you own or are authorized to edit.
-  </footer>
+function showWorkspace(workspace) {
+  uploadWorkspace.classList.remove("show");
+  linkWorkspace.classList.remove("show");
+  result.classList.remove("show");
 
-  <script>
-    const linkTab = document.getElementById("linkTab");
-    const uploadTab = document.getElementById("uploadTab");
-    const linkPanel = document.getElementById("linkPanel");
-    const uploadPanel = document.getElementById("uploadPanel");
-    const videoFile = document.getElementById("videoFile");
-    const preview = document.getElementById("preview");
-    const videoPlayer = document.getElementById("videoPlayer");
-    const fileName = document.getElementById("fileName");
-    const notice = document.getElementById("notice");
+  uploadMessage.style.display = "none";
+  linkMessage.style.display = "none";
 
-    let selectedVideo = null;
-    let previewUrl = null;
+  workspace.classList.add("show");
+  workspace.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-    function showNotice(message, error = false) {
-      notice.textContent = message;
-      notice.classList.toggle("error", error);
-      notice.style.display = "block";
+function showMessage(element, message, error = false) {
+  element.textContent = message;
+  element.classList.toggle("error", error);
+  element.style.display = "block";
+}
+
+document.getElementById("openUpload").onclick = () => {
+  showWorkspace(uploadWorkspace);
+};
+
+document.getElementById("openLink").onclick = () => {
+  showWorkspace(linkWorkspace);
+};
+
+document.getElementById("chooseFile").onclick = () => {
+  videoFile.click();
+};
+
+videoFile.addEventListener("change", () => {
+  const file = videoFile.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("video/")) {
+    showMessage(uploadMessage, "Please select a valid video.", true);
+    videoFile.value = "";
+    return;
+  }
+
+  selectedVideo = file;
+
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+  previewUrl = URL.createObjectURL(file);
+  videoPlayer.src = previewUrl;
+  fileName.textContent =
+    file.name + " · " + (file.size / 1048576).toFixed(2) + " MB";
+
+  preview.style.display = "block";
+  uploadMessage.style.display = "none";
+});
+
+async function sendForProcessing(data, element) {
+  if (!API_URL) {
+    showMessage(
+      element,
+      "Your video is ready, but the processing service has not been connected yet. No watermark has been removed. The next step is to connect the backend.",
+      true
+    );
+    return;
+  }
+
+  showMessage(element, "Uploading your video for processing...");
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: data
+    });
+
+    if (!response.ok) {
+      throw new Error("The processing service returned an error.");
     }
 
-    function switchTab(mode) {
-      const isLink = mode === "link";
+    const output = await response.json();
 
-      linkPanel.classList.toggle("hidden", !isLink);
-      uploadPanel.classList.toggle("hidden", isLink);
-      linkTab.classList.toggle("active", isLink);
-      uploadTab.classList.toggle("active", !isLink);
-
-      notice.style.display = "none";
+    if (!output.video_url) {
+      throw new Error("No processed video was returned.");
     }
 
-    linkTab.addEventListener("click", () => switchTab("link"));
-    uploadTab.addEventListener("click", () => switchTab("upload"));
+    const outputUrl = new URL(output.video_url, API_URL);
 
-    document.getElementById("chooseFile").addEventListener("click", () => {
-      videoFile.click();
-    });
+    if (outputUrl.protocol !== "https:" &&
+        outputUrl.hostname !== "localhost") {
+      throw new Error("The service returned an unsafe video URL.");
+    }
 
-    videoFile.addEventListener("change", () => {
-      const file = videoFile.files[0];
+    document.getElementById("resultVideo").src = outputUrl.href;
+    document.getElementById("downloadLink").href = outputUrl.href;
+    result.classList.add("show");
 
-      if (!file) return;
+    showMessage(element, "Processing completed. Preview your result below.");
+    result.scrollIntoView({ behavior: "smooth" });
 
-      if (!file.type.startsWith("video/")) {
-        showNotice("Please choose a valid video file.", true);
-        videoFile.value = "";
-        return;
-      }
+  } catch (error) {
+    showMessage(
+      element,
+      "Processing failed: " + error.message,
+      true
+    );
+  }
+}
 
-      selectedVideo = file;
+document.getElementById("processUpload").onclick = async () => {
+  if (!selectedVideo) {
+    showMessage(uploadMessage, "Choose a video first.", true);
+    return;
+  }
 
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl);
-      }
+  const data = new FormData();
+  data.append("video", selectedVideo);
+  await sendForProcessing(data, uploadMessage);
+};
 
-      previewUrl = URL.createObjectURL(file);
-      videoPlayer.src = previewUrl;
-      fileName.textContent =
-        file.name + " • " + (file.size / (1024 * 1024)).toFixed(2) + " MB";
+document.getElementById("processLink").onclick = async () => {
+  const value = document.getElementById("videoUrl").value.trim();
 
-      preview.style.display = "block";
-      notice.style.display = "none";
-    });
+  let parsed;
 
-    document.getElementById("processLink").addEventListener("click", () => {
-      const value = document.getElementById("videoUrl").value.trim();
+  try {
+    parsed = new URL(value);
+  } catch {
+    showMessage(linkMessage, "Enter a valid TikTok video URL.", true);
+    return;
+  }
 
-      if (!value) {
-        showNotice("Please paste a TikTok video link first.", true);
-        return;
-      }
+  const host = parsed.hostname.toLowerCase();
+  const isTikTok =
+    host === "tiktok.com" ||
+    host.endsWith(".tiktok.com");
 
-      let parsed;
+  if (parsed.protocol !== "https:" || !isTikTok) {
+    showMessage(linkMessage, "Enter a valid HTTPS TikTok URL.", true);
+    return;
+  }
 
-      try {
-        parsed = new URL(value);
-      } catch {
-        showNotice("Please enter a valid video URL.", true);
-        return;
-      }
+  const data = new FormData();
+  data.append("video_url", parsed.href);
 
-      const host = parsed.hostname.toLowerCase();
-      const validHost =
-        host === "tiktok.com" ||
-        host.endsWith(".tiktok.com");
+  await sendForProcessing(data, linkMessage);
+};
 
-      if (parsed.protocol !== "https:" || !validHost) {
-        showNotice("Please enter a valid HTTPS TikTok link.", true);
-        return;
-      }
+window.addEventListener("beforeunload", () => {
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+});
+</script>
 
-      showNotice(
-        "Your link is ready. The video-processing backend is not connected yet. We will connect it in the next development step."
-      );
-    });
-
-    document.getElementById("processUpload").addEventListener("click", () => {
-      if (!selectedVideo) {
-        showNotice("Please select a video first.", true);
-        return;
-      }
-
-      showNotice(
-        "Your video is ready for processing. The watermark-removal engine is not connected yet, so no edited video has been created."
-      );
-    });
-
-    window.addEventListener("beforeunload", () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-    });
-  </script>
 </body>
 </html>
