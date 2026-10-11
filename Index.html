@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+  <title>VanishFX | Video Watermark Tool</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #09090f;
+      --panel: #12121c;
+      --purple: #8b5cf6;
+      --pink: #c084fc;
+      --text: #f5f3ff;
+      --muted: #a1a1b5;
+      --border: #29243b;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse at 50% 0%, #241344 0%, transparent 45%),
+        var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    nav {
+      max-width: 1050px;
+      margin: auto;
+      padding: 22px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ffffff0d;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--pink);
+    }
+
+    .status {
+      color: #c4b5fd;
+      font-size: 12px;
+      border: 1px solid #6d28d9;
+      padding: 5px 10px;
+      border-radius: 30px;
+    }
+
+    main {
+      max-width: 760px;
+      margin: auto;
+      padding: 65px 20px 35px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .tag {
+      color: #c4b5fd;
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(34px, 8vw, 55px);
+      line-height: 1.12;
+      letter-spacing: -2px;
+      margin: 17px 0;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #a78bfa, #e879f9);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 520px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .card {
+      background: #12121ceF;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 20px 70px #0005;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      color: var(--muted);
+      background: #0c0c14;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab.active {
+      background: #291a47;
+      border-color: var(--purple);
+      color: white;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .url-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="url"] {
+      width: 100%;
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid #343044;
+      background: #09090f;
+      border-radius: 12px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--purple);
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .primary {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 19px;
+      color: white;
+      background: linear-gradient(110deg, #7c3aed, #a855f7);
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .primary:active {
+      transform: scale(.98);
+    }
+
+    .primary:hover {
+      opacity: .9;
+    }
+
+    .url-row .primary {
+      white-space: nowrap;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .dropzone {
+      border: 1px dashed #6d4aa5;
+      background: #171122;
+      border-radius: 16px;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    .upload-icon {
+      font-size: 34px;
+      margin-bottom: 7px;
+    }
+
+    .dropzone p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 5px 0 17px;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .secondary {
+      background: #211733;
+      border: 1px solid #5b3b83;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .preview {
+      display: none;
+      margin-top: 18px;
+    }
+
+    video {
+      width: 100%;
+      max-height: 350px;
+      background: #000;
+      border-radius: 12px;
+    }
+
+    .file-name {
+      color: #ddd6fe;
+      font-size: 13px;
+      margin-top: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #20182e;
+      border: 1px solid #493365;
+      color: #ddd6fe;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.error {
+      background: #2b151d;
+      border-color: #713044;
+      color: #fecdd3;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .feature {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 10px;
+      text-align: center;
+      background: #101019;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 13px;
+      margin: 5px 0;
+    }
+
+    .feature small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px 35px;
+      color: #77778b;
+      font-size: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      main {
+        padding-top: 45px;
+      }
+
+      .card {
+        padding: 17px;
+      }
+
+      .url-row {
+        flex-direction: column;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        text-align: left;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Vanish<span>FX</span></div>
+    <div class="status">● VIDEO TOOL</div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="tag">Your videos, your way</div>
+      <h1>Clean videos.<br><span>No distractions.</span></h1>
+      <p>
+        Upload a video or paste a TikTok link.
+        Prepare your video for watermark processing
+        with a simple, modern workspace.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="tabs">
+        <button class="tab active" id="linkTab" type="button">
+          🔗 TikTok Link
+        </button>
+        <button class="tab" id="uploadTab" type="button">
+          📁 Upload Video
+        </button>
+      </div>
+
+      <div id="linkPanel">
+        <label class="field-label" for="videoUrl">
+          Paste your TikTok video link
+        </label>
+
+        <div class="url-row">
+          <input
+            type="url"
+            id="videoUrl"
+            placeholder="https://www.tiktok.com/..."
+            autocomplete="url"
+          >
+          <button class="primary" id="processLink" type="button">
+            Continue →
+          </button>
+        </div>
+
+        <p class="hint">
+          Use a public video you own or have permission to process.
+        </p>
+      </div>
+
+      <div id="uploadPanel" class="hidden">
+        <div class="dropzone">
+          <div class="upload-icon">⬆️</div>
+          <strong>Select a video from your phone</strong>
+          <p>Choose a video file to preview before processing.</p>
+
+          <input
+            class="file-input"
+            type="file"
+            id="videoFile"
+            accept="video/*"
+          >
+
+          <button class="secondary" id="chooseFile" type="button">
+            Choose video
+          </button>
+        </div>
+
+        <div class="preview" id="preview">
+          <video id="videoPlayer" controls playsinline></video>
+          <div class="file-name" id="fileName"></div>
+          <button
+            class="primary"
+            id="processUpload"
+            type="button"
+            style="width:100%; margin-top:14px;"
+          >
+            Continue to processing →
+          </button>
+        </div>
+      </div>
+
+      <div class="notice" id="notice" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="features">
+      <div class="feature">
+        <span>🔗</span>
+        <strong>Link support</strong>
+        <small>Start with a TikTok URL</small>
+      </div>
+
+      <div class="feature">
+        <span>📱</span>
+        <strong>Mobile friendly</strong>
+        <small>Designed for your phone</small>
+      </div>
+
+      <div class="feature">
+        <span>✨</span>
+        <strong>Simple workflow</strong>
+        <small>Preview before processing</small>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    VanishFX is an independent project and is not affiliated with TikTok.
+    <br>Only process videos you own or are authorized to edit.
+  </footer>
+
+  <script>
+    const linkTab = document.getElementById("linkTab");
+    const uploadTab = document.getElementById("uploadTab");
+    const linkPanel = document.getElementById("linkPanel");
+    const uploadPanel = document.getElementById("uploadPanel");
+    const videoFile = document.getElementById("videoFile");
+    const preview = document.getElementById("preview");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const fileName = document.getElementById("fileName");
+    const notice = document.getElementById("notice");
+
+    let selectedVideo = null;
+    let previewUrl = null;
+
+    function showNotice(message, error = false) {
+      notice.textContent = message;
+      notice.classList.toggle("error", error);
+      notice.style.display = "block";
+    }
+
+    function switchTab(mode) {
+      const isLink = mode === "link";
+
+      linkPanel.classList.toggle("hidden", !isLink);
+      uploadPanel.classList.toggle("hidden", isLink);
+      linkTab.classList.toggle("active", isLink);
+      uploadTab.classList.toggle("active", !isLink);
+
+      notice.style.display = "none";
+    }
+
+    linkTab.addEventListener("click", () => switchTab("link"));
+    uploadTab.addEventListener("click", () => switchTab("upload"));
+
+    document.getElementById("chooseFile").addEventListener("click", () => {
+      videoFile.click();
+    });
+
+    videoFile.addEventListener("change", () => {
+      const file = videoFile.files[0];
+
+      if (!file) return;
+
+      if (!file.type.startsWith("video/")) {
+        showNotice("Please choose a valid video file.", true);
+        videoFile.value = "";
+        return;
+      }
+
+      selectedVideo = file;
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+
+      previewUrl = URL.createObjectURL(file);
+      videoPlayer.src = previewUrl;
+      fileName.textContent =
+        file.name + " • " + (file.size / (1024 * 1024)).toFixed(2) + " MB";
+
+      preview.style.display = "block";
+      notice.style.display = "none";
+    });
+
+    document.getElementById("processLink").addEventListener("click", () => {
+      const value = document.getElementById("videoUrl").value.trim();
+
+      if (!value) {
+        showNotice("Please paste a TikTok video link first.", true);
+        return;
+      }
+
+      let parsed;
+
+      try {
+        parsed = new URL(value);
+      } catch {
+        showNotice("Please enter a valid video URL.", true);
+        return;
+      }
+
+      const host = parsed.hostname.toLowerCase();
+      const validHost =
+        host === "tiktok.com" ||
+        host.endsWith(".tiktok.com");
+
+      if (parsed.protocol !== "https:" || !validHost) {
+        showNotice("Please enter a valid HTTPS TikTok link.", true);
+        return;
+      }
+
+      showNotice(
+        "Your link is ready. The video-processing backend is not connected yet. We will connect it in the next development step."
+      );
+    });
+
+    document.getElementById("processUpload").addEventListener("click", () => {
+      if (!selectedVideo) {
+        showNotice("Please select a video first.", true);
+        return;
+      }
+
+      showNotice(
+        "Your video is ready for processing. The watermark-removal engine is not connected yet, so no edited video has been created."
+      );
+    });
+
+    window.addEventListener("beforeunload", () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    });
+  </script>
+</body>
+</html>
